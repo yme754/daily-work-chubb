@@ -6,11 +6,10 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- ✅ Use a valid Spring Boot parent -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version> <!-- latest stable release -->
+        <version>3.3.5</version> 
         <relativePath/>
     </parent>
 
@@ -25,7 +24,6 @@
     </properties>
 
     <dependencies>
-        <!-- ✅ Core Spring Boot starters -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
@@ -36,20 +34,17 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- ✅ R2DBC support -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-r2dbc</artifactId>
         </dependency>
 
-        <!-- ✅ Correct MySQL R2DBC driver -->
         <dependency>
             <groupId>io.asyncer</groupId>
             <artifactId>r2dbc-mysql</artifactId>
             <version>1.1.0</version>
         </dependency>
 
-        <!-- ✅ Optional JDBC driver (only for migrations like Flyway/Liquibase) -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -57,14 +52,11 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- ✅ Lombok for boilerplate reduction -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
-        <!-- ✅ Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -80,7 +72,6 @@
 
     <build>
         <plugins>
-            <!-- ✅ Compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -95,8 +86,6 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-
-            <!-- ✅ Spring Boot plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
