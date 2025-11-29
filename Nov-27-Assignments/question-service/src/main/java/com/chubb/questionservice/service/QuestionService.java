@@ -38,6 +38,7 @@ public class QuestionService {
 
     }
 
+
     public ResponseEntity<String> addQuestion(Question question) {
         questionDao.save(question);
         return new ResponseEntity<>("success",HttpStatus.CREATED);
@@ -46,11 +47,9 @@ public class QuestionService {
     public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(List<Integer> questionIds) {
         List<QuestionWrapper> wrappers = new ArrayList<>();
         List<Question> questions = new ArrayList<>();
-
         for(Integer id : questionIds){
             questions.add(questionDao.findById(id).get());
         }
-
         for(Question question : questions){
             QuestionWrapper wrapper = new QuestionWrapper();
             wrapper.setId(question.getId());
@@ -61,12 +60,10 @@ public class QuestionService {
             wrapper.setOp4(question.getOp4());
             wrappers.add(wrapper);
         }
-
         return new ResponseEntity<>(wrappers, HttpStatus.OK);
     }
 
     public ResponseEntity<Integer> getScore(List<Response> responses) {
-
         int right = 0;
         for(Response response : responses){
             Question question = questionDao.findById(response.getId()).get();
