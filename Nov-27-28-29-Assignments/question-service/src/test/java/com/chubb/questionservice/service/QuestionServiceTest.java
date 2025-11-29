@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 
 import com.chubb.questionservice.dao.QuestionDao;
@@ -81,9 +80,12 @@ public class QuestionServiceTest {
 
     @Test
     void testGetQuestionsForQuiz() {
-        when(questionDao.findRandomQuestionsByCategory("Java", PageRequest.of(0,10))).thenReturn(List.of(1,2,3));
-        var response = questionService.getQuestionsForQuiz("Java", PageRequest.of(0,10));
+        when(questionDao.findRandomQuestionsByCategory("Java"))
+                .thenReturn(List.of(1,2,3,4,5));
+        var response = questionService.getQuestionsForQuiz("Java", 3);
         assertEquals(3, response.getBody().size());
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
+
+
 }

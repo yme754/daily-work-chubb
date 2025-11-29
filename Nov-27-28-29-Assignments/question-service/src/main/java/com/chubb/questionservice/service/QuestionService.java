@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -73,8 +72,11 @@ public class QuestionService {
         return new ResponseEntity<>(right, HttpStatus.OK);
     }
 
-	public ResponseEntity<List<Integer>> getQuestionsForQuiz(String categoryName, Pageable numQuestions){
-		List<Integer> questions = questionDao.findRandomQuestionsByCategory(categoryName, numQuestions);
-        return new ResponseEntity<>(questions, HttpStatus.OK);
-	}
+    public ResponseEntity<List<Integer>> getQuestionsForQuiz(String category, int numQ){
+        List<Integer> all = questionDao.findRandomQuestionsByCategory(category);
+        List<Integer> limited = all.stream().limit(numQ).toList();
+        return ResponseEntity.ok(limited);
+    }
+
+
 }

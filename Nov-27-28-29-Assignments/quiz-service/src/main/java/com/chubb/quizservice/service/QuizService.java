@@ -13,15 +13,21 @@ import com.chubb.quizservice.model.QuestionWrapper;
 import com.chubb.quizservice.model.Quiz;
 import com.chubb.quizservice.model.Response;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 
 @Service
 public class QuizService {
-	@Autowired
+
+    @Autowired
     QuizDao quizDao;
 
     @Autowired
     QuizInterface quizInterface;
 
+    private static final String CB_NAME = "questiondb";
+
+    @CircuitBreaker(name = CB_NAME, fallbackMethod = "createQuizFallback")
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
         List<Integer> questions = quizInterface.getQuestionsForQuiz(category, numQ).getBody();
         Quiz quiz = new Quiz();
@@ -32,14 +38,16 @@ public class QuizService {
     }
 
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
-          Quiz quiz = quizDao.findById(id).get();
-          List<Integer> questionIds = quiz.getQuestionIds();
-          ResponseEntity<List<QuestionWrapper>> questions = quizInterface.getQuestionsFromId(questionIds);
-          return questions;
+        Quiz quiz = quizDao.findById(id).orElseThrow();
+        List<Integer> questionIds = quiz.getQuestionIds();
+        return quizInterface.getQuestionsFromId(questionIds);
     }
 
     public ResponseEntity<Integer> calculateResult(Integer id, List<Response> responses) {
-        ResponseEntity<Integer> score = quizInterface.getScore(responses);
-        return score;
+        return quizInterface.getScore(responses);
+    }
+
+    public ResponseEntity<String> createQuizFallback(String category, int numQ, String title, Throwable t) {
+        return new ResponseEntity<>("Question Service down. Try later.", HttpStatus.SERVICE_UNAVAILABLE);
     }
 }

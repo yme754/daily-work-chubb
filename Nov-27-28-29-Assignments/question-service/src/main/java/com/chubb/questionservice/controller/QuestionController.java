@@ -2,8 +2,6 @@ package com.chubb.questionservice.controller;
 
 import java.util.List;
 
-import org.springframework.core.env.Environment;
-import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chubb.questionservice.model.Question;
@@ -25,9 +22,6 @@ public class QuestionController {
 
     @Autowired
     QuestionService questionService;
-
-    @Autowired
-    Environment environment;
 
     @GetMapping("allQuestions")
     public ResponseEntity<List<Question>> getAllQuestions(){
@@ -44,21 +38,19 @@ public class QuestionController {
         return  questionService.addQuestion(question);
     }
 
-    @GetMapping("generate")
-    public ResponseEntity<List<Integer>> getQuestionsForQuiz
-            (@RequestParam String categoryName, @RequestParam Pageable numQuestions ){
-        return questionService.getQuestionsForQuiz(categoryName, numQuestions);
+    @GetMapping("getQuestionsForQuiz/{category}/{numQ}")
+    public ResponseEntity<List<Integer>> getQuestionsForQuiz(@PathVariable String category,
+                                                             @PathVariable int numQ){
+        return questionService.getQuestionsForQuiz(category, numQ);
     }
 
     @PostMapping("getQuestions")
     public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(@RequestBody List<Integer> questionIds){
-//        System.out.println(environment.getProperty("local.server.port"));
         return questionService.getQuestionsFromId(questionIds);
     }
 
     @PostMapping("getScore")
-    public ResponseEntity<Integer> getScore(@RequestBody List<Response> responses)
-    {
+    public ResponseEntity<Integer> getScore(@RequestBody List<Response> responses){
         return questionService.getScore(responses);
     }
 }

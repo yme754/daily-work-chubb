@@ -8,10 +8,10 @@
 		<version>4.0.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.flightapp</groupId>
-	<artifactId>ServiceRegistry</artifactId>
+	<groupId>com.chubb.serviceregistery</groupId>
+	<artifactId>service-registry</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ServiceRegistry</name>
+	<name>service-registry</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
