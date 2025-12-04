@@ -1,0 +1,7 @@
+running redis on terminal
+-> installed using homebrew
+      brew install redis
+-> run
+      brew services start redis
+-> to check
+      redis-cli ping
