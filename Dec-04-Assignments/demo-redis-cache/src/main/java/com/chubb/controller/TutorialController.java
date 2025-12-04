@@ -1,6 +1,8 @@
 package com.chubb.controller;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +37,9 @@ public class TutorialController {
     }
 
     @PostMapping
-    public Tutorial createTutorial(@RequestBody Tutorial tutorial) {
-        return service.save(tutorial);
+    public ResponseEntity<?> createTutorial(@RequestBody Tutorial tutorial) {
+    	Tutorial saved = service.save(tutorial);
+        return ResponseEntity.created(URI.create("/api/tutorials/" + saved.getId())).body(Map.of("id", saved.getId()));
     }
 
     @PutMapping("/{id}")
