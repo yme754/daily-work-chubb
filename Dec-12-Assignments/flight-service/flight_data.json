@@ -1,0 +1,13 @@
+{
+    "fromPlace": "BLR",
+    "toPlace": "DEL",
+    "arrivalTime": "2025-12-25T14:00:00",
+    "departureTime": "2025-12-25T10:00:00",
+    "availableSeats": 100,
+    "price": {
+        "oneWay": 5000,
+        "roundTrip": 9000
+    },
+    "airlineId": "693b96d2e92fd96d6d3ca6ff",
+    "flightNumber": "SH-20"
+}
